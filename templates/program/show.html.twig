@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Show Program{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1> Program N° : {{ id }} </h1>
+
+        <a class="btn btn-primary" href="{{ path('program_show', {id: id-1 }) }}">Programme précédent </a>
+        <a class="btn btn-primary" href="{{ path('program_show', {id: id+1 }) }}">Programme suivant </a>
+
+    </div>
+{% endblock %}
