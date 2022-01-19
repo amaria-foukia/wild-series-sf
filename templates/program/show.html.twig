@@ -1,13 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Show Program{% endblock %}
+{% block title %}Série #{{ program.id }}{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1> Program N° : {{ id }} </h1>
-
-        <a class="btn btn-primary" href="{{ path('program_show', {id: id-1 }) }}">Programme précédent </a>
-        <a class="btn btn-primary" href="{{ path('program_show', {id: id+1 }) }}">Programme suivant </a>
-
+    <div class="media">
+        <img class="align-self-start mr-3" width="200" src="{{program.poster}}" alt="{{ program.title }} poster">
+        <div class="media-body">
+            <h1 class="mt-0">{{ program.title }}</h1>
+            <p>{{ program.summary }}</p>
+            <p>Catégorie : {{ program.category.name }}</p>
+        </div>
     </div>
+
+    <a href="{{ path('program_index') }}">
+        Retour à la liste des programmes
+    </a>
 {% endblock %}
