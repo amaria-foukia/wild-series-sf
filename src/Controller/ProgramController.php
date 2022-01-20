@@ -2,14 +2,19 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Program;
 use App\Entity\Season;
 use App\Entity\Episode;
+use App\Form\CategoryType;
+use App\Form\ProgramType;
 use App\Repository\EpisodeRepository;
 use App\Repository\ProgramRepository;
 use App\Repository\SeasonRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -25,6 +30,43 @@ class ProgramController extends AbstractController
                 'programs' => $programRepo->findAll()
         ]
         );
+    }
+
+    #[Route("/new", name:"new")]
+    public function new(Request $request, EntityManagerInterface $entityManager) : Response
+    {
+        // Create a new Category Object
+        $program = new Program();
+
+        // Create the associated Form
+        $form = $this->createForm(ProgramType::class, $program);
+
+        // Get data from HTTP request
+        $form->handleRequest($request);
+
+        // Was the form submitted ?
+        if ($form->isSubmitted()) {
+            // Deal with the submitted data
+
+            // Persist Program Object
+            $entityManager->persist($program);
+
+            // Flush the persisted object
+            $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                "Le programme a été ajouté avec succès !"
+            );
+
+            // Finally redirect to programs list
+            return $this->redirectToRoute('program_index');
+        }
+
+        // Render the form
+        return $this->render('program/new.html.twig', [
+            "form" => $form->createView(),
+        ]);
     }
 
     #[Route('/{id<^[0-9]+$>}', name: 'show', methods: ['GET'])]

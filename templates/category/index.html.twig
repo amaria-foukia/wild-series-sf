@@ -1,11 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CategoryController!{% endblock %}
+{% block title %}{% endblock %}
 
 {% block body %}
 
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     <h1>Toutes les séries de la table category : </h1>
     {% for category in categories %}
+
         <div>
             <p>{{ loop.index }} /  Catégorie : {{ category.name }} </p>
             <a href="{{ path("category_show", { categoryName : category.name }) }}">Voir la liste des films de categorie : {{ category.name }}  </a>
