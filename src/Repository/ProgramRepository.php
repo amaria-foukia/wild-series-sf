@@ -35,7 +35,6 @@ class ProgramRepository extends ServiceEntityRepository
     }
 
 
-
     public function findOneBySomeField($value): ?Program
     {
         return $this->createQueryBuilder('p')

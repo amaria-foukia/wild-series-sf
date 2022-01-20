@@ -8,7 +8,8 @@
     {% for category in categories %}
         <div>
             <p>{{ loop.index }} /  Catégorie : {{ category.name }} </p>
-        </div>
+            <a href="{{ path("category_show", { categoryName : category.name }) }}">Voir la liste des films de categorie : {{ category.name }}  </a>
+        </div><br>
     {% else %}
         Aucune catégorie trouvée.
     {% endfor %}

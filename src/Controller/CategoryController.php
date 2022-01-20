@@ -26,7 +26,7 @@ class CategoryController extends AbstractController
     {
         $category = $categoryRepo->findOneBy(['name'=>$categoryName]);
 
-        $program = $programRepo->findBy(['category'=>$category]);
+        $program = $programRepo->findBy(['category'=>$category], ['id'=>'DESC'], 3);
 
         if (!$category) {
             throw $this->createNotFoundException(
