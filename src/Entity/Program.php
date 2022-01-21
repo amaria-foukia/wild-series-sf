@@ -13,22 +13,22 @@ class Program
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $title;
+    private string $title;
 
     #[ORM\Column(type: 'text')]
-    private $summary;
+    private string $summary;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $poster;
+    private string $poster;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'programs')]
-    private $category;
+    private Category $category;
 
     #[ORM\OneToMany(mappedBy: 'program', targetEntity: Season::class, orphanRemoval: true)]
-    private $seasons;
+    private Collection $seasons;
 
     public function __construct()
     {

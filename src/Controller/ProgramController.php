@@ -73,13 +73,14 @@ class ProgramController extends AbstractController
     public function show(int $id, ProgramRepository $programRepo, SeasonRepository $seasonRepo): Response
     {
         $program = $programRepo->findOneBy(['id' => $id]);
-        $seasons = $seasonRepo->findAll();
+        $seasons = $seasonRepo->findBy(['program' => $program]);
 
         if (!$program) {
             throw $this->createNotFoundException(
                 'No program with id : '.$id.' found in program\'s table.'
             );
         }
+
         return $this->render('program/show.html.twig', parameters: [
             'program' => $program,
             'seasons' =>  $seasons,
@@ -90,18 +91,23 @@ class ProgramController extends AbstractController
     #[ParamConverter('season', options: ['mapping' => ['seasonId' => 'id']])]
     public function showSeason(Program $program, Season $season, EpisodeRepository $episodeRepo): Response
     {
-        $episode = $episodeRepo->findBy(['season'=>$season]);
+        $episodes = $episodeRepo->findBy(['season'=>$season]);
 
+        if (empty($season->getId())) {
+            throw $this->createNotFoundException(
+                'No season\'s found in program\'s table.'
+            );
+        }
         return $this->render('program/season_show.html.twig', parameters: [
             'program' => $program,
             'season' =>  $season,
 
-            'episode' => $episode,
+            'episodes' => $episodes,
         ]);
 
     }
 
-/*  #[Route('/{id<^[0-9]+$>}/season/{seasonId<^[0-9]+$>}/episode/{episodeId<^[0-9]+$>}', name: 'season_show', methods: ['GET'])]
+    #[Route('/{id<^[0-9]+$>}/season/{seasonId<^[0-9]+$>}/episode/{episodeId<^[0-9]+$>}', name: 'episode_show', methods: ['GET'])]
     #[ParamConverter('season', options: ['mapping' => ['seasonId' => 'id']])]
     #[ParamConverter('episode', options: ['mapping' => ['episodeId' => 'id']])]
     public function showEpisode(Program $program, Season $season, Episode $episode, EpisodeRepository $episodeRepo): Response
@@ -115,6 +121,5 @@ class ProgramController extends AbstractController
         ]);
 
     }
-*/
 
 }

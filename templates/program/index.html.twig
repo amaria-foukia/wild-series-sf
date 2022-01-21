@@ -13,11 +13,12 @@
     <h1>Toutes les séries de la table program : </h1>
     {% for program in programs %}
         <div>
-            <img src="{{ program.poster }}">
+            <img src="{{ program.poster }}" width="200">
             <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
             <p>{{ program.summary }}</p>
             <a href="{{ path("program_show", { id: program.id }) }}">Voir la fiche</a>
         </div>
+        <hr>
     {% else %}
         Aucune série trouvée.
     {% endfor %}

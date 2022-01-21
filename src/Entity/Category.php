@@ -48,7 +48,7 @@ class Category
      */
     public function getPrograms(): Collection
     {
-        return $this->programs;
+        return $this->programs->toArray();
     }
 
     public function addProgram(Program $program): self
