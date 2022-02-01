@@ -6,9 +6,13 @@
 
     <h1>Ajouter un programme</h1>
 
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button type="submit">Add a program !</button>
-    {{ form_end(form) }}
+    <section style="width: 50%">
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-danger" type="submit">Add a program !</button>
+        {{ form_end(form) }}
+
+    </section>
 
 {% endblock %}

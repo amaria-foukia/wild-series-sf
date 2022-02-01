@@ -11,12 +11,14 @@ use App\Form\ProgramType;
 use App\Repository\EpisodeRepository;
 use App\Repository\ProgramRepository;
 use App\Repository\SeasonRepository;
+use App\Service\ProgramListener;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 
 #[Route("/program", name:"program_")]
@@ -33,7 +35,7 @@ class ProgramController extends AbstractController
     }
 
     #[Route("/new", name:"new")]
-    public function new(Request $request, EntityManagerInterface $entityManager) : Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         // Create a new Category Object
         $program = new Program();
@@ -69,15 +71,19 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/{id<^[0-9]+$>}', name: 'show', methods: ['GET'])]
-    public function show(int $id, ProgramRepository $programRepo, SeasonRepository $seasonRepo): Response
+    #[Route('/{slug}', name: 'show', methods: ['GET'])]
+    public function show(string $slug, ProgramRepository $programRepo, SeasonRepository $seasonRepo): Response
     {
-        $program = $programRepo->findOneBy(['id' => $id]);
+
+        $program = $programRepo->findOneBy(['slug' => $slug]);
+
+        //dd($slug);
+
         $seasons = $seasonRepo->findBy(['program' => $program]);
 
         if (!$program) {
             throw $this->createNotFoundException(
-                'No program with id : '.$id.' found in program\'s table.'
+                'No program with id : '.$slug.' found in program\'s table.'
             );
         }
 
@@ -87,7 +93,7 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/{id<^[0-9]+$>}/season/{seasonId<^[0-9]+$>}', name: 'season_show', methods: ['GET'])]
+    #[Route('/{slug}/season/{seasonId}', name: 'season_show', methods: ['GET'])]
     #[ParamConverter('season', options: ['mapping' => ['seasonId' => 'id']])]
     public function showSeason(Program $program, Season $season, EpisodeRepository $episodeRepo): Response
     {
@@ -107,7 +113,7 @@ class ProgramController extends AbstractController
 
     }
 
-    #[Route('/{id<^[0-9]+$>}/season/{seasonId<^[0-9]+$>}/episode/{episodeId<^[0-9]+$>}', name: 'episode_show', methods: ['GET'])]
+    #[Route('/{slug}/season/{seasonId}/episode/{episodeId}', name: 'episode_show', methods: ['GET'])]
     #[ParamConverter('season', options: ['mapping' => ['seasonId' => 'id']])]
     #[ParamConverter('episode', options: ['mapping' => ['episodeId' => 'id']])]
     public function showEpisode(Program $program, Season $season, Episode $episode, EpisodeRepository $episodeRepo): Response

@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <h1>Toutes les acteurs de la table actor : </h1>
+
+    {% for actor in actors %}
+
+        <div>
+
+            <a href="{{ path("actor_show", { id : actor.id } ) }}"><p>{{ loop.index }} - {{ actor.name }}</p></a>
+
+        </div><br>
+
+    {% else %}
+        Aucun acteur trouvé.
+    {% endfor %}
+
+    <a href="{{ path('app_index') }}">
+        Retour à l'accueil
+    </a>
+
+{% endblock %}

@@ -9,6 +9,8 @@
 {% block body %}
     <div class="media">
 
+        {{ dump(category) }}
+        {{ dump(program) }}
         {% for p in program %}
 
             <img class="align-self-start mr-3" width="200" src="{{p.poster}}" alt="{{ p.title }} poster">

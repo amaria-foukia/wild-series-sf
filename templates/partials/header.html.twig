@@ -1,12 +1,11 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#"><img src="/assets/images/series.png" width="50" height="50"></a>
-        <span class="navbar-brand">Wild Series</span>
+        <a class="navbar-brand" href="{{ path('app_index') }}"><img src="/assets/images/series.png" width="45" height="45">Wild Series</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <div class="collapse navbar-collapse collapsed" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-4">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{ path('program_index') }}">Programme</a>
                 </li>
@@ -14,15 +13,24 @@
                     <a class="nav-link" href="{{ path('category_index') }}">Categories</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('category_new') }}">Add a category</a>
+                    <a class="nav-link" href="{{ path('category_new') }}">New Category</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('program_new') }}">Add a program</a>
+                    <a class="nav-link" href="{{ path('program_new') }}">New Program</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('season_new') }}">New Season</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('episode_new') }}">New Episode</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('actor_index') }}">Les Acteurs </a>
                 </li>
             </ul>
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <button class="btn btn-outline-danger" type="submit">Search</button>
             </form>
         </div>
     </div>

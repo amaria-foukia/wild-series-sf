@@ -70,7 +70,6 @@ class CategoryController extends AbstractController
     public function show(string $categoryName,  CategoryRepository $categoryRepo, ProgramRepository $programRepo): Response
     {
         $category = $categoryRepo->findOneBy(['name'=>$categoryName]);
-
         $program = $programRepo->findBy(['category'=>$category], ['id'=>'DESC'], 3);
 
         if (!$category) {

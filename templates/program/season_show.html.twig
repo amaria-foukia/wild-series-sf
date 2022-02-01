@@ -11,7 +11,7 @@
 
         {% for e in episodes %}
 
-           <li><a href="{{ path("program_episode_show" , { id: program.id, seasonId: season.id, episodeId: e.id }) }}" >Episode : {{ e.number }} - {{ e.title }}</a></li>
+           <li><a href="{{ path("program_episode_show" , { slug: program.slug, seasonId: season.id, episodeId: e.id }) }}" >Episode : {{ e.number }} - {{ e.title }}</a></li>
 
         {% endfor %}
 
